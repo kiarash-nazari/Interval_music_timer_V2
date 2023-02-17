@@ -231,6 +231,44 @@ class IntervallScreen extends StatelessWidget {
                 const SizedBox(
                   height: 5,
                 ),
+
+                //loop input
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: Get.width / 3,
+                        child: TextField(
+                          style: const TextStyle(color: Color(0xFF00CCFF)),
+                          controller: loopInputController,
+                          keyboardType: TextInputType.number,
+                          onSubmitted: (String rest) {
+                            activeTimerController.loop.value = int.parse(rest);
+                          },
+                          decoration: MyDecoration().inputDecorations(
+                            radius: 30,
+                            enabledBorderColor: Colors.grey,
+                            focusedBorderColor: const Color(0xFF00CCFF),
+                            helperText: "How many reps",
+                            helperTextColor: Colors.white,
+                            lableText: "-> Loop",
+                            lableTextColor: const Color(0xFF00CCFF),
+                            prefixIcon: MdiIcons.autorenew,
+                            prefixIconColor: const Color(0xFF00CCFF),
+                            suffixText: "rep",
+                            suffixTextColor:
+                                const Color.fromARGB(200, 255, 255, 255),
+                            hintText: 'loop',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 //
                 ///
                 ///Row of play and pause buttom
@@ -248,7 +286,6 @@ class IntervallScreen extends StatelessWidget {
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
                       child: Container(
-                        // height: Get.height / 6,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -261,7 +298,6 @@ class IntervallScreen extends StatelessWidget {
                               end: Alignment.bottomCenter,
                               colors: [Colors.white60, Colors.white10]),
                           borderRadius: BorderRadius.circular(25),
-                          // border: Border.all(width: 2, color: Colors.white30),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -422,126 +458,86 @@ class IntervallScreen extends StatelessWidget {
                   ),
                 ),
 
-                //loop input
-                Padding(
-                  padding: const EdgeInsets.only(top: 12),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                          width: Get.width / 3,
-                          child: TextField(
-                            style: const TextStyle(color: Color(0xFF00CCFF)),
-                            controller: loopInputController,
-                            keyboardType: TextInputType.number,
-                            onSubmitted: (String rest) {
-                              activeTimerController.loop.value =
-                                  int.parse(rest);
+                //Slider
+                ///
+                ///.
+                SizedBox(
+                  height: 210,
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      height: 185.0,
+                      viewportFraction: 0.6,
+                      initialPage: 0,
+                      enlargeCenterPage: true,
+                      enlargeFactor: 0.4,
+                    ),
+                    items: activeTimerController.musicsList.map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return GestureDetector(
+                            onTap: () {
+                              activeTimerController.backgroundPhoto.value =
+                                  i.image!;
+                              if (activeTimerController.mainMusic.value ==
+                                  i.audio) {
+                                if (activeTimerController
+                                    .mixPlayerVolume.value) {
+                                  activeTimerController.playerMix
+                                      .setVolume(0.0);
+                                  activeTimerController.mixPlayerVolume.value =
+                                      false;
+                                } else {
+                                  activeTimerController.playerMix
+                                      .setVolume(1.0);
+                                  activeTimerController.mixPlayerVolume.value =
+                                      true;
+                                }
+                              } else {
+                                activeTimerController.mainMusic.value =
+                                    i.audio!;
+                                activeTimerController.getMixMusic();
+                                activeTimerController.playerMix.setVolume(1.0);
+                                activeTimerController.mixPlayerVolume.value =
+                                    true;
+                              }
+                              if (activeTimerController.playerMix.playing) {
+                              } else {
+                                activeTimerController.getMixMusic();
+                                activeTimerController.mixPlayerVolume.value =
+                                    true;
+                              }
                             },
-                            decoration: MyDecoration().inputDecorations(
-                              radius: 30,
-                              enabledBorderColor: Colors.grey,
-                              focusedBorderColor: const Color(0xFF00CCFF),
-                              helperText: "How many reps",
-                              helperTextColor: Colors.white,
-                              lableText: "-> Loop",
-                              lableTextColor: const Color(0xFF00CCFF),
-                              prefixIcon: MdiIcons.autorenew,
-                              prefixIconColor: const Color(0xFF00CCFF),
-                              suffixText: "rep",
-                              suffixTextColor:
-                                  const Color.fromARGB(200, 255, 255, 255),
-                              hintText: 'loop',
-                            ),
-                          )),
-                      //Slider
-                      ///
-                      ///.
-                      SizedBox(
-                        height: 210,
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                            height: 185.0,
-                            viewportFraction: 0.6,
-                            initialPage: 0,
-                            enlargeCenterPage: true,
-                            enlargeFactor: 0.4,
-                          ),
-                          items: activeTimerController.musicsList.map((i) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    activeTimerController
-                                        .backgroundPhoto.value = i.image!;
-                                    if (activeTimerController.mainMusic.value ==
-                                        i.audio) {
-                                      if (activeTimerController
-                                          .mixPlayerVolume.value) {
-                                        activeTimerController.playerMix
-                                            .setVolume(0.0);
-                                        activeTimerController
-                                            .mixPlayerVolume.value = false;
-                                      } else {
-                                        activeTimerController.playerMix
-                                            .setVolume(1.0);
-                                        activeTimerController
-                                            .mixPlayerVolume.value = true;
-                                      }
-                                    } else {
-                                      activeTimerController.mainMusic.value =
-                                          i.audio!;
-                                      activeTimerController.getMixMusic();
-                                      activeTimerController.playerMix
-                                          .setVolume(1.0);
-                                      activeTimerController
-                                          .mixPlayerVolume.value = true;
-                                    }
-                                    if (activeTimerController
-                                        .playerMix.playing) {
-                                    } else {
-                                      activeTimerController.getMixMusic();
-                                      activeTimerController
-                                          .mixPlayerVolume.value = true;
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 200,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    decoration: BoxDecoration(
-                                      color: Colors.amber,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(30)),
-                                      image: DecorationImage(
-                                        image: AssetImage(i.image!),
-                                        fit: BoxFit.cover,
-                                      ),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Color.fromARGB(
-                                              127, 188, 186, 186),
-                                          blurRadius: 30.0, // soften the shadow
-                                          spreadRadius: 5.0, //extend the shadow
-                                          offset: Offset(
-                                            10.0, // Move to right 10  horizontally
-                                            25.0, // Move to bottom 10 Vertically
-                                          ),
-                                        )
-                                      ],
+                            child: Container(
+                              width: 200,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(30)),
+                                image: DecorationImage(
+                                  image: AssetImage(i.image!),
+                                  fit: BoxFit.cover,
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromARGB(127, 188, 186, 186),
+                                    blurRadius: 30.0, // soften the shadow
+                                    spreadRadius: 5.0, //extend the shadow
+                                    offset: Offset(
+                                      10.0, // Move to right 10  horizontally
+                                      25.0, // Move to bottom 10 Vertically
                                     ),
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      )
-                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }).toList(),
                   ),
-                )
+                ),
               ],
             ),
           ),

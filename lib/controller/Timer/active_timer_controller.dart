@@ -8,28 +8,35 @@ import '../../models/music/ModelOfMusic.dart';
 class ActiveTimerController extends GetxController {
   List<ModelOfMusic> musicsList = [
     ModelOfMusic(
-        audio: "https://media1.vocaroo.com/mp3/1f8vwHbqWi4j",
+        audio:
+            "https://media.githubusercontent.com/media/ehsanNazari145/Interval_music_timer_V2/master/assets/audio/ViralMix.mp3?token=AXRLJC3LQX7PZUSJX4YPBVDD56BMU",
         id: "1",
         image: "assets/images/covers/cover1.jpg"),
     ModelOfMusic(
-        audio: "assets/audio/mainMusics/mix1.mp3",
+        audio:
+            "https://media.githubusercontent.com/media/ehsanNazari145/Interval_music_timer_V2/master/assets/audio/mainMusics/mix1.mp3?token=AXRLJCYMVFMJG6O433OUDPTD56CRG",
         id: "2",
         image: "assets/images/covers/cover2.jpg"),
     ModelOfMusic(
-        audio: "assets/audio/mainMusics/mix2.mp3",
+        audio:
+            "https://media.githubusercontent.com/media/ehsanNazari145/Interval_music_timer_V2/master/assets/audio/mainMusics/mix2.mp3?token=AXRLJC3I4TLLR2UOFHZKKFTD56CYK",
         id: "3",
         image: "assets/images/covers/cover3.jpg"),
     ModelOfMusic(
-        audio: "assets/audio/mainMusics/mix3.mp3",
+        audio:
+            "https://media.githubusercontent.com/media/ehsanNazari145/Interval_music_timer_V2/master/assets/audio/mainMusics/mix3.mp3?token=AXRLJC7N6AHEKZZPBOM7CBLD56C4C",
         id: "4",
         image: "assets/images/covers/cover4.jpg"),
     ModelOfMusic(
-        audio: "assets/audio/mainMusics/mix4.mp3",
+        audio:
+            "https://media.githubusercontent.com/media/ehsanNazari145/Interval_music_timer_V2/master/assets/audio/mainMusics/mix4.mp3?token=AXRLJC5HPGX5T2IHQDCFBUTD56C6S",
         id: "5",
         image: "assets/images/covers/cover5.jpg"),
   ];
 
-  var mainMusic = "https://media1.vocaroo.com/mp3/1f8vwHbqWi4j".obs;
+  var mainMusic =
+      "https://media.githubusercontent.com/media/ehsanNazari145/Interval_music_timer_V2/master/assets/audio/ViralMix.mp3?token=AXRLJC3LQX7PZUSJX4YPBVDD56BMU"
+          .obs;
   var backgroundPhoto = "assets/images/covers/cover1.jpg".obs;
   final player1 = AudioPlayer();
   final playerStart = AudioPlayer();
