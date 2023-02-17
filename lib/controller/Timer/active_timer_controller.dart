@@ -8,7 +8,8 @@ import '../../models/music/ModelOfMusic.dart';
 class ActiveTimerController extends GetxController {
   List<ModelOfMusic> musicsList = [
     ModelOfMusic(
-        audio: "assets/audio/ViralMix.mp3",
+        audio:
+            "https://drive.google.com/file/d/19ceMZc6S1GR_fbXwSszrnFtCUfs_U-zI/view?usp=share_link",
         id: "1",
         image: "assets/images/covers/cover1.jpg"),
     ModelOfMusic(
@@ -29,7 +30,9 @@ class ActiveTimerController extends GetxController {
         image: "assets/images/covers/cover5.jpg"),
   ];
 
-  var mainMusic = "assets/audio/ViralMix.mp3".obs;
+  var mainMusic =
+      "https://drive.google.com/file/d/19ceMZc6S1GR_fbXwSszrnFtCUfs_U-zI/view?usp=share_link"
+          .obs;
   var backgroundPhoto = "assets/images/covers/cover1.jpg".obs;
   final player1 = AudioPlayer();
   final playerStart = AudioPlayer();
@@ -153,7 +156,7 @@ class ActiveTimerController extends GetxController {
   }
 
   getMixMusic() async {
-    await playerMix.setAsset(mainMusic.value);
+    await playerMix.setUrl(mainMusic.value);
     playerMix.play();
   }
 
